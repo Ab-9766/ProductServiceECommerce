@@ -3,6 +3,8 @@ package com.example.productservicedec20.Controller;
 import com.example.productservicedec20.Models.Product;
 import com.example.productservicedec20.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,9 +21,13 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<Product> getAllProducts(){
-        return new ArrayList<>();
+    public ResponseEntity<List<Product>> getAllProducts()
+    {
+        ResponseEntity<List<Product>> response=
+                new ResponseEntity<>(productService.getAllProduct(), HttpStatus.NOT_FOUND);
+        return response;
     }
+
 
     @GetMapping("/{id}")
     public Product getSingleProduct(@PathVariable("id") Long id){
@@ -45,7 +51,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long id){
+    public ResponseEntity<Void>deleteProduct(@PathVariable("id") Long id){
+    return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
