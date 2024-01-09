@@ -15,7 +15,10 @@
     <description>ProductServiceDec20</description>
     <properties>
         <java.version>17</java.version>
+        <start-class>org.springframework.ProductServiceDec20.
+            ProductServiceDec20Application</start-class>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

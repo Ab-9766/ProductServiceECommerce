@@ -1,5 +1,7 @@
 package com.example.productservicedec20.Controller;
 
+import com.example.productservicedec20.DTOs.ExceptionDTO;
+import com.example.productservicedec20.Exceptions.ProductNotFoundException;
 import com.example.productservicedec20.Models.Product;
 import com.example.productservicedec20.Services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,14 @@ public class ProductController {
 
 
     @GetMapping("/{id}")
-    public Product getSingleProduct(@PathVariable("id") Long id){
-        return productService.getSingleProduct(id);
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+//        try {
+
+            return new ResponseEntity<>(productService.getSingleProduct(id), HttpStatus.OK);
+//        } catch (ArithmeticException exception) {
+//            ResponseEntity<Product> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            return response;
+//        }
     }
 
     @PostMapping()
@@ -55,5 +63,10 @@ public class ProductController {
     return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Void> handleProductNotFoundException(){
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 
 }
